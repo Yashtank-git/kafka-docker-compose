@@ -13,12 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 ---
 version: '2'
 services:
   controller-1:
-    image: ${IMAGE}
+    image: apache/kafka:latest
     environment:
       KAFKA_NODE_ID: 1
       CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
@@ -30,13 +29,19 @@ services:
       #KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       #KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       #KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      #KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      #KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs
     volumes:
-      - ~/kafka-docker-compose/files/secrets:/etc/kafka/secrets
       - ~/kafka-docker-compose/files/controller:/mnt/shared/config
-
+    networks:
+      - byte-pe-kafka-network
+        #command : |
+        #- echo "testing"
+        #sh ./opt/kafka/bin/kafka-topics.sh --create --topic my-topic-test-1 --partitions 1 --replication-factor 1 --bootstrap-server kafka-1:19092
+        # - echo "Waiting for Kafka to start up..."
+        # - while ! nc -z kafka-1 19092; nc -z kafka-2 19092; nc -z kafka-3 19092; do sleep 1; done
+        #- ./opt/kafka/bin/kafka-topics.sh --create --topic my-topic-test-1 --partitions 1 --replication-factor 1 --bootstrap-server kafka-1:19092
   controller-2:
-    image: ${IMAGE}
+    image: apache/kafka:latest
     environment:
       KAFKA_NODE_ID: 2
       CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
@@ -50,37 +55,38 @@ services:
       #KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       #KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
     volumes:
-      - ~/kafka-docker-compose/files/secrets:/etc/kafka/secrets
       - ~/kafka-docker-compose/files/controller:/mnt/shared/config
+    networks:
+      - byte-pe-kafka-network 
 
   controller-3:
-    image: ${IMAGE}
+    image: apache/kafka:latest
     environment:
       KAFKA_NODE_ID: 3
       CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
       KAFKA_CONTROLLER_QUORUM_VOTERS: '1@controller-1:9093,2@controller-2:9093,3@controller-3:9093'
-#      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
-#      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
-#      KAFKA_LISTENERS: 'CONTROLLER://:9093'
-#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-#      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-#      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-#      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-#      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-  
+      #KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      #KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      #KAFKA_LISTENERS: 'CONTROLLER://:9093'
+      #KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      #KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      #KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      #KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      #KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
     volumes:
-      - ~/kafka-docker-compose/files/secrets:/etc/kafka/secrets
       - ~/kafka-docker-compose/files/controller:/mnt/shared/config
+    networks:
+      - byte-pe-kafka-network
 
   kafka-1:
-    image: ${IMAGE}
+    image: apache/kafka:latest
     ports:
       - 29092:9092
     hostname: kafka-1
     container_name: kafka-1
     environment:
       KAFKA_NODE_ID: 4
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka-1:19092,PLAINTEXT_HOST://localhost:29092'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka-1:9092'
       CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
       KAFKA_CONTROLLER_QUORUM_VOTERS: '1@controller-1:9093,2@controller-2:9093,3@controller-3:9093'
       #KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
@@ -94,20 +100,22 @@ services:
     volumes:
       - ~/kafka-docker-compose/files/secrets:/etc/kafka/secrets
       - ~/kafka-docker-compose/files/broker:/mnt/shared/config
+    networks:
+      - byte-pe-kafka-network
     depends_on:
       - controller-1
       - controller-2
-      - controller-3
+        #- controller-3
 
   kafka-2:
-    image: ${IMAGE}
+    image: apache/kafka:latest
     ports:
       - 39092:9092
     hostname: kafka-2
     container_name: kafka-2
     environment:
       KAFKA_NODE_ID: 5
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka-2:19092,PLAINTEXT_HOST://localhost:39092'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka-2:9092'
       CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
       KAFKA_CONTROLLER_QUORUM_VOTERS: '1@controller-1:9093,2@controller-2:9093,3@controller-3:9093'
       #KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
@@ -122,22 +130,21 @@ services:
     volumes:
       - ~/kafka-docker-compose/files/secrets:/etc/kafka/secrets
       - ~/kafka-docker-compose/files/broker:/mnt/shared/config
+    networks:
+      - byte-pe-kafka-network
     depends_on:
       - controller-1
       - controller-2
-      - controller-3
-
   kafka-3:
-    image: ${IMAGE}
+    image: apache/kafka:latest
     ports:
       - 49092:9092
     hostname: kafka-3
     container_name: kafka-3
     environment:
       KAFKA_NODE_ID: 6
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka-3:19092,PLAINTEXT_HOST://localhost:49092'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka-3:9092'
       CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
-
       KAFKA_CONTROLLER_QUORUM_VOTERS: '1@controller-1:9093,2@controller-2:9093,3@controller-3:9093'
       #KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
       #KAFKA_LISTENERS: 'PLAINTEXT://:19092,PLAINTEXT_HOST://:9092'
@@ -151,11 +158,13 @@ services:
     volumes:
       - ~/kafka-docker-compose/files/secrets:/etc/kafka/secrets
       - ~/kafka-docker-compose/files/broker:/mnt/shared/config
-    
+    networks:
+      - byte-pe-kafka-network
+
     depends_on:
       - controller-1
       - controller-2
-      - controller-3
+        #- controller-3
 
 
   kafka-ui:
@@ -168,11 +177,29 @@ services:
       - kafka-2
       - kafka-3
       - controller-1
-      - controller-2
-      - controller-3
+        #- controller-2
+        #- controller-3
 
     environment:
       KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:19092,kafka-2:19092,kafka-3:19092
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
       KAFKA_CLUSTERS_0_METRICS_PORT: 9997
       DYNAMIC_CONFIG_ENABLED: 'true'
+    networks:
+      - byte-pe-kafka-network
+
+  ubuntu-host:
+    image: eclipse-temurin:17-alpine
+    hostname: ubuntu
+    container_name: ubuntu
+    command: [sh, -c, "ls"]
+    tty : true
+    stdin_open: true  
+
+    volumes:
+      - ~/kafka-docker-compose/kafka_2.13-3.7.0:/kafka
+    networks:
+      - byte-pe-kafka-network
+
+networks:
+  byte-pe-kafka-network: 
