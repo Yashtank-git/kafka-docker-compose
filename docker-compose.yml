@@ -34,8 +34,8 @@ services:
       - ~/kafka-docker-compose/files/controller:/mnt/shared/config
     networks:
       - byte-pe-kafka-network
-        #command : |
-        #- echo "testing"
+    command : |
+      - echo "testing"
         #sh ./opt/kafka/bin/kafka-topics.sh --create --topic my-topic-test-1 --partitions 1 --replication-factor 1 --bootstrap-server kafka-1:19092
         # - echo "Waiting for Kafka to start up..."
         # - while ! nc -z kafka-1 19092; nc -z kafka-2 19092; nc -z kafka-3 19092; do sleep 1; done
@@ -185,19 +185,6 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:9092,kafka-2:9092,kafka-3:9092
       KAFKA_CLUSTERS_0_METRICS_PORT: 9997
       DYNAMIC_CONFIG_ENABLED: 'true'
-    networks:
-      - byte-pe-kafka-network
-
-  ubuntu-host:
-    image: eclipse-temurin:17-alpine
-    hostname: ubuntu
-    container_name: ubuntu
-    command: [sh, -c, "ls"]
-    tty : true
-    stdin_open: true  
-
-    volumes:
-      - ~/kafka-docker-compose/kafka_2.13-3.7.0:/kafka
     networks:
       - byte-pe-kafka-network
 
