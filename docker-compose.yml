@@ -17,7 +17,7 @@
 version: '2'
 services:
   controller-1:
-    image: ${IMAGE}
+    image: apache/kafka:latest
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: 'controller'
@@ -31,9 +31,11 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+    networks:
+      - byte-pe-network
   
   controller-2:
-    image: ${IMAGE}
+    image: apache/kafka:latest
     environment:
       KAFKA_NODE_ID: 2
       KAFKA_PROCESS_ROLES: 'controller'
@@ -47,9 +49,11 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-    
+    networks:
+      - byte-pe-network
+
   controller-3:
-    image: ${IMAGE}
+    image: apache/kafka:latest
     environment:
       KAFKA_NODE_ID: 3
       KAFKA_PROCESS_ROLES: 'controller'
@@ -63,15 +67,17 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+    networks:
+      - byte-pe-network
 
   kafka-1:
-    image: ${IMAGE}
+    image: apache/kafka:latest
     hostname: kafka-1
     container_name: kafka-1
     ports:
       - 29093:9093
     volumes:
-      - ~/kafka-docker-compose-ssl/secrets:/etc/kafka/secrets
+      - ./secrets:/etc/kafka/secrets
     environment:
       KAFKA_NODE_ID: 4
       KAFKA_PROCESS_ROLES: 'broker'
@@ -88,7 +94,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-      KAFKA_SSL_KEYSTORE_FILENAME: 'kafka01.keystore.jks'
+      KAFKA_SSL_KEYSTORE_FILENAME: 'broker-1.keystore.jks'
       KAFKA_SSL_KEYSTORE_CREDENTIALS: 'kafka_keystore_creds'
       KAFKA_SSL_KEY_CREDENTIALS: 'kafka_ssl_key_creds'
       KAFKA_SSL_TRUSTSTORE_FILENAME: 'kafka.truststore.jks'
@@ -99,15 +105,17 @@ services:
       - controller-1
       - controller-2
       - controller-3
+    networks:
+      - byte-pe-network
 
   kafka-2:
-    image: ${IMAGE}
+    image: apache/kafka:latest
     hostname: kafka-2
     container_name: kafka-2
     ports:
       - 39093:9093
     volumes:
-      - ~/kafka-docker-compose-ssl/secrets:/etc/kafka/secrets
+      - ./secrets:/etc/kafka/secrets
     environment:
       KAFKA_NODE_ID: 5
       KAFKA_PROCESS_ROLES: 'broker'
@@ -124,7 +132,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-      KAFKA_SSL_KEYSTORE_FILENAME: 'kafka01.keystore.jks'
+      KAFKA_SSL_KEYSTORE_FILENAME: 'broker-2.keystore.jks'
       KAFKA_SSL_KEYSTORE_CREDENTIALS: 'kafka_keystore_creds'
       KAFKA_SSL_KEY_CREDENTIALS: 'kafka_ssl_key_creds'
       KAFKA_SSL_TRUSTSTORE_FILENAME: 'kafka.truststore.jks'
@@ -135,15 +143,18 @@ services:
       - controller-1
       - controller-2
       - controller-3
+    networks:
+      - byte-pe-network
+
 
   kafka-3:
-    image: ${IMAGE}
+    image: apache/kafka:latest
     hostname: kafka-3
     container_name: kafka-3
     ports:
       - 49093:9093
     volumes:
-      - ~/kafka-docker-compose-ssl/secrets:/etc/kafka/secrets
+      - ./secrets:/etc/kafka/secrets
     environment:
       KAFKA_NODE_ID: 6
       KAFKA_PROCESS_ROLES: 'broker'
@@ -160,7 +171,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-      KAFKA_SSL_KEYSTORE_FILENAME: 'kafka01.keystore.jks'
+      KAFKA_SSL_KEYSTORE_FILENAME: 'broker-3.keystore.jks'
       KAFKA_SSL_KEYSTORE_CREDENTIALS: 'kafka_keystore_creds'
       KAFKA_SSL_KEY_CREDENTIALS: 'kafka_ssl_key_creds'
       KAFKA_SSL_TRUSTSTORE_FILENAME: 'kafka.truststore.jks'
@@ -172,6 +183,23 @@ services:
       - controller-2
       - controller-3
 
+    networks:
+      - byte-pe-network
+
+  kafka-init:
+    image: apache/kafka:latest
+    depends_on:
+      - kafka-1
+      - kafka-2
+      - kafka-3
+    volumes:
+      - ./create-topics.sh:/create-topics.sh
+      - ./client.properties:/client.properties
+      - ./secrets:/etc/kafka/secrets
+    entrypoint: ["sh", "/create-topics.sh"]
+    networks:
+      - byte-pe-network
+
   kafka-ui:
     container_name: kafka-ui
     image: provectuslabs/kafka-ui:latest
@@ -179,16 +207,24 @@ services:
       - 8080:8080
     depends_on:
       - kafka-1
+      - kafka-2
+      - kafka-3
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: SSL
-      KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_LOCATION: /kafka01.keystore.jks
-      KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_PASSWORD: "abcdefgh"
+      KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_LOCATION: /kafka.keystore.jks
+      KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_PASSWORD: "password"
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:19093,kafka-2:19093,kafka-3:19093 # SSL LISTENER!
       KAFKA_CLUSTERS_0_SSL_TRUSTSTORELOCATION: /kafka.truststore.jks
-      KAFKA_CLUSTERS_0_SSL_TRUSTSTOREPASSWORD: "abcdefgh"
+      KAFKA_CLUSTERS_0_SSL_TRUSTSTOREPASSWORD: "password"
       KAFKA_CLUSTERS_0_PROPERTIES_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: '' # DISABLE COMMON NAME VERIFICATION
       DYNAMIC_CONFIG_ENABLED: 'true'
     volumes:
-      - ~/kafka-docker-compose-ssl/secrets/kafka.truststore.jks:/kafka.truststore.jks
-      - ~/kafka-docker-compose-ssl/secrets/kafka01.keystore.jks:/kafka01.keystore.jks
+      - ./secrets/kafka.truststore.jks:/kafka.truststore.jks
+      - ./secrets/client.keystore.jks:/kafka.keystore.jks
+    networks:
+      - byte-pe-network
+
+networks:
+  byte-pe-network:
+
