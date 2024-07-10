@@ -94,13 +94,13 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-      KAFKA_SSL_KEYSTORE_FILENAME: 'broker-1.keystore.jks'
+      KAFKA_SSL_KEYSTORE_FILENAME: 'kafka-1.keystore.jks'
       KAFKA_SSL_KEYSTORE_CREDENTIALS: 'kafka_keystore_creds'
       KAFKA_SSL_KEY_CREDENTIALS: 'kafka_ssl_key_creds'
       KAFKA_SSL_TRUSTSTORE_FILENAME: 'kafka.truststore.jks'
       KAFKA_SSL_TRUSTSTORE_CREDENTIALS: 'kafka_truststore_creds'
       KAFKA_SSL_CLIENT_AUTH: 'required'
-      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: ""
+      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: 'https'
     depends_on:
       - controller-1
       - controller-2
@@ -132,13 +132,13 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-      KAFKA_SSL_KEYSTORE_FILENAME: 'broker-2.keystore.jks'
+      KAFKA_SSL_KEYSTORE_FILENAME: 'kafka-2.keystore.jks'
       KAFKA_SSL_KEYSTORE_CREDENTIALS: 'kafka_keystore_creds'
       KAFKA_SSL_KEY_CREDENTIALS: 'kafka_ssl_key_creds'
       KAFKA_SSL_TRUSTSTORE_FILENAME: 'kafka.truststore.jks'
       KAFKA_SSL_TRUSTSTORE_CREDENTIALS: 'kafka_truststore_creds'
       KAFKA_SSL_CLIENT_AUTH: 'required'
-      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: ""
+      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: 'https'
     depends_on:
       - controller-1
       - controller-2
@@ -171,13 +171,13 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-      KAFKA_SSL_KEYSTORE_FILENAME: 'broker-3.keystore.jks'
+      KAFKA_SSL_KEYSTORE_FILENAME: 'kafka-3.keystore.jks'
       KAFKA_SSL_KEYSTORE_CREDENTIALS: 'kafka_keystore_creds'
       KAFKA_SSL_KEY_CREDENTIALS: 'kafka_ssl_key_creds'
       KAFKA_SSL_TRUSTSTORE_FILENAME: 'kafka.truststore.jks'
       KAFKA_SSL_TRUSTSTORE_CREDENTIALS: 'kafka_truststore_creds'
       KAFKA_SSL_CLIENT_AUTH: 'required'
-      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: ""
+      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: 'https'
     depends_on:
       - controller-1
       - controller-2
@@ -193,10 +193,10 @@ services:
       - kafka-2
       - kafka-3
     volumes:
+      - ./secrets:/etc/kafka/secrets
       - ./create-topics.sh:/create-topics.sh
       - ./client.properties:/client.properties
-      - ./secrets:/etc/kafka/secrets
-    entrypoint: ["sh", "/create-topics.sh"]
+    command: "bash -c './create-topics.sh'"
     networks:
       - byte-pe-network
 
@@ -217,7 +217,7 @@ services:
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:19093,kafka-2:19093,kafka-3:19093 # SSL LISTENER!
       KAFKA_CLUSTERS_0_SSL_TRUSTSTORELOCATION: /kafka.truststore.jks
       KAFKA_CLUSTERS_0_SSL_TRUSTSTOREPASSWORD: "password"
-      KAFKA_CLUSTERS_0_PROPERTIES_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: '' # DISABLE COMMON NAME VERIFICATION
+      KAFKA_CLUSTERS_0_PROPERTIES_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: 'https' 
       DYNAMIC_CONFIG_ENABLED: 'true'
     volumes:
       - ./secrets/kafka.truststore.jks:/kafka.truststore.jks
