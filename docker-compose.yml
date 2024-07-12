@@ -1,0 +1,69 @@
+version: '1'
+
+services:
+  immudb:
+    image: codenotary/immudb:latest
+    hostname: immudb
+    container_name: immudb
+    ports:
+      - "3322:3322"  # gRPC port
+      - "9497:9497"  # REST API port
+      - "8080:8080"
+    volumes:
+      - ./immudb_data:/data
+    environment:
+      IMMUDB_DATA_DIR: /data
+      IMMUDB_LOGFILE: /data/immudb.log
+      IMMUDB_PID_FILE: /data/immudb.pid
+      IMMUDB_ADMIN_PASSWORD: immudb
+    networks:
+      - byte-pe-network
+
+  immudb-client:
+    image: codenotary/immuclient:latest
+    container_name: immudb-client
+    volumes:
+      - ./immudb_client_data:/data
+      - ./immudb-init.sh:/immudb-init.sh
+    environment:
+      IMMUCLIENT_IMMUDB_ADDRESS: 'immudb'
+      IMMUCLIENT_IMMUDB_PORT: 3322
+      IMMUCLIENT_SERVERNAME: immudb
+      IMMUCLIENT_AUTH: true
+    entrypoint: ["sh", "./immudb-init.sh"]
+    depends_on:
+      immudb-api:
+        condition: service_healthy
+    networks:
+      - byte-pe-network
+
+  immudb-api:
+    image: codenotary/immugw:latest
+    container_name: immudb-api
+    ports:
+      - 3323:3323
+    volumes:
+      - ./immudb_gw_data:/data
+    environment:
+        IMMUGW_ADDRESS: 0.0.0.0
+        IMMUGW_PORT: 3323
+        IMMUGW_IMMUDB_ADDRESS: immudb
+          #IMMUGW_IMMUDB_PORT: 3322
+          #IMMUGW_PIDFILE: /data/process.pid
+          #IMMUGW_DIR: .
+          #IMMUGW_DETACHED: "true"
+          #IMMUGW_SERVERNAME: immudb-api
+          #IMMUGW_MTLS: false
+    networks:
+      - byte-pe-network
+    depends_on:
+      immudb:
+        condition: service_healthy
+
+volumes:
+  immudb_data:
+    driver: local
+
+networks:
+  byte-pe-network:
+    driver: bridge
