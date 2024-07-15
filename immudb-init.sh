@@ -25,5 +25,13 @@ curl -X POST \
   -H 'Authorization: '$TOKEN'' \
   -d '{"user":"ZGF0YXZlcnNl","password":"REFUQV8xMjM0","permission":254,"database":"dataverse"}'
 
+
+curl -X POST \
+  http://immudb-api:3323/user/changepermission \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: '$TOKEN'' \
+  -d '{"properties":"GRANT","username":"dataverse","permission":1,"database":"defaultdb"}'
+
+
 sleep infinity
 

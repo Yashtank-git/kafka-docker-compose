@@ -1,0 +1,255 @@
+immudb2024/07/15 07:30:40 INFO: 
+ _                               _ _     
+(_)                             | | |    
+ _ _ __ ___  _ __ ___  _   _  __| | |__  
+| | '_ ` _ \| '_ ` _ \| | | |/ _` | '_ \ 
+| | | | | | | | | | | | |_| | (_| | |_) |
+|_|_| |_| |_|_| |_| |_|\__,_|\__,_|_.__/ 
+
+immudb 1.9.3
+Commit  : 5487dd300655083ff68c4a72c2edb38ca84dd1bb
+Built at: Thu, 23 May 2024 10:07:40 UTC
+Static  : true
+================ Config ================
+Data dir         : /var/lib/immudb
+Address          : 0.0.0.0:3322
+Metrics address  : 0.0.0.0:9497/metrics
+Sync replication : false
+Config file      : configs/immudb.toml
+Log file         : /data/immudb.log
+Log format       : text
+Max recv msg size: 33554432
+Auth enabled     : true
+Dev mode         : true
+Default database : defaultdb
+Maintenance mode : false
+Synced mode      : true
+----------------------------------------
+Superadmin default credentials
+   Username      : immudb
+   Password      : immudb
+========================================
+
+immudb2024/07/15 07:30:40 INFO: creating database 'systemdb' {replica = false}...
+immudb2024/07/15 07:30:40 INFO: binary-linking up to date at '/var/lib/immudb/systemdb'
+immudb2024/07/15 07:30:40 INFO: index '/var/lib/immudb/systemdb/index_00' {ts=0, discarded_snapshots=0} successfully loaded
+immudb2024/07/15 07:30:40 INFO: indexing in progress at '/var/lib/immudb/systemdb'
+immudb2024/07/15 07:30:40 INFO: index '/var/lib/immudb/systemdb/index_01' {ts=0, discarded_snapshots=0} successfully loaded
+immudb2024/07/15 07:30:40 INFO: indexing in progress at '/var/lib/immudb/systemdb'
+immudb2024/07/15 07:30:40 INFO: loading sql-engine for database 'systemdb' {replica = false}...
+immudb2024/07/15 07:30:40 INFO: index '/var/lib/immudb/systemdb/index_0243544c2e' {ts=0, discarded_snapshots=0} successfully loaded
+immudb2024/07/15 07:30:40 INFO: indexing in progress at '/var/lib/immudb/systemdb'
+immudb2024/07/15 07:30:40 INFO: sql-engine ready for database 'systemdb' {replica = false}
+immudb2024/07/15 07:30:41 INFO: index '/var/lib/immudb/systemdb/index_0343544c2e' {ts=0, discarded_snapshots=0} successfully loaded
+immudb2024/07/15 07:30:41 INFO: indexing in progress at '/var/lib/immudb/systemdb'
+immudb2024/07/15 07:30:41 INFO: document-engine ready for database 'systemdb' {replica = false}
+immudb2024/07/15 07:30:41 INFO: database 'systemdb' successfully created {replica = false}
+immudb2024/07/15 07:30:41 INFO: admin user 'immudb' successfully created
+immudb2024/07/15 07:30:41 INFO: creating database 'defaultdb' {replica = false}...
+immudb2024/07/15 07:30:41 INFO: binary-linking up to date at '/var/lib/immudb/defaultdb'
+immudb2024/07/15 07:30:41 INFO: index '/var/lib/immudb/defaultdb/index_00' {ts=0, discarded_snapshots=0} successfully loaded
+immudb2024/07/15 07:30:41 INFO: indexing in progress at '/var/lib/immudb/defaultdb'
+immudb2024/07/15 07:30:41 INFO: index '/var/lib/immudb/defaultdb/index_01' {ts=0, discarded_snapshots=0} successfully loaded
+immudb2024/07/15 07:30:41 INFO: indexing in progress at '/var/lib/immudb/defaultdb'
+immudb2024/07/15 07:30:41 INFO: loading sql-engine for database 'defaultdb' {replica = false}...
+immudb2024/07/15 07:30:41 INFO: index '/var/lib/immudb/defaultdb/index_0243544c2e' {ts=0, discarded_snapshots=0} successfully loaded
+immudb2024/07/15 07:30:41 INFO: indexing in progress at '/var/lib/immudb/defaultdb'
+immudb2024/07/15 07:30:41 INFO: sql-engine ready for database 'defaultdb' {replica = false}
+immudb2024/07/15 07:30:41 INFO: index '/var/lib/immudb/defaultdb/index_0343544c2e' {ts=0, discarded_snapshots=0} successfully loaded
+immudb2024/07/15 07:30:41 INFO: indexing in progress at '/var/lib/immudb/defaultdb'
+immudb2024/07/15 07:30:41 INFO: document-engine ready for database 'defaultdb' {replica = false}
+immudb2024/07/15 07:30:41 INFO: database 'defaultdb' successfully created {replica = false}
+immudb2024/07/15 07:30:41 INFO: started with an empty default database
+immudb2024/07/15 07:30:41 INFO: flushing index '/var/lib/immudb/systemdb/index_00' {ts=1, cleanup_percentage=0.00/0.00, since_cleanup=1} requested via snapshotSince...
+immudb2024/07/15 07:30:41 INFO: index '/var/lib/immudb/systemdb/index_00' {ts=1, cleanup_percentage=0.00/0.00} successfully flushed
+immudb2024/07/15 07:30:41 INFO: flushing index '/var/lib/immudb/systemdb/index_00' {ts=1} finished with: 1 inner nodes, 0 leaf nodes, 1 entries
+immudb2024/07/15 07:30:41 INFO: sessions guard started
+immudb2024/07/15 07:30:41 INFO: pgsql server is running at port 5432
+immudb2024/07/15 07:30:41 INFO: Webconsole enabled: 0.0.0.0:8080
+immudb2024/07/15 07:30:41 INFO: Swagger UI enabled: 0.0.0.0:8080
+immudb2024/07/15 07:30:41 INFO: web-api server enabled on 0.0.0.0:8080/api (http)
+immudb2024/07/15 07:30:41 INFO: you can now use immuadmin and immuclient CLIs to login with the immudb superadmin user and start using immudb.
+immudb2024/07/15 07:32:08 INFO: creating database 'dataverse'...
+immudb2024/07/15 07:32:08 INFO: 1 transaction/s to be indexed at '/var/lib/immudb/systemdb'
+immudb2024/07/15 07:32:08 INFO: creating database 'dataverse' {replica = false}...
+immudb2024/07/15 07:32:09 INFO: binary-linking up to date at '/var/lib/immudb/dataverse'
+immudb2024/07/15 07:32:09 INFO: index '/var/lib/immudb/dataverse/index_00' {ts=0, discarded_snapshots=0} successfully loaded
+immudb2024/07/15 07:32:09 INFO: indexing in progress at '/var/lib/immudb/dataverse'
+immudb2024/07/15 07:32:09 INFO: index '/var/lib/immudb/dataverse/index_01' {ts=0, discarded_snapshots=0} successfully loaded
+immudb2024/07/15 07:32:09 INFO: indexing in progress at '/var/lib/immudb/dataverse'
+immudb2024/07/15 07:32:09 INFO: loading sql-engine for database 'dataverse' {replica = false}...
+immudb2024/07/15 07:32:09 INFO: index '/var/lib/immudb/dataverse/index_0243544c2e' {ts=0, discarded_snapshots=0} successfully loaded
+immudb2024/07/15 07:32:09 INFO: indexing in progress at '/var/lib/immudb/dataverse'
+immudb2024/07/15 07:32:09 INFO: sql-engine ready for database 'dataverse' {replica = false}
+immudb2024/07/15 07:32:09 INFO: index '/var/lib/immudb/dataverse/index_0343544c2e' {ts=0, discarded_snapshots=0} successfully loaded
+immudb2024/07/15 07:32:09 INFO: indexing in progress at '/var/lib/immudb/dataverse'
+immudb2024/07/15 07:32:09 INFO: document-engine ready for database 'dataverse' {replica = false}
+immudb2024/07/15 07:32:09 INFO: database 'dataverse' successfully created {replica = false}
+immudb2024/07/15 07:32:09 INFO: dataverse.Autoload: true
+immudb2024/07/15 07:32:09 INFO: dataverse.Synced: true
+immudb2024/07/15 07:32:09 INFO: dataverse.SyncFrequency: 20
+immudb2024/07/15 07:32:09 INFO: dataverse.Replica: false
+immudb2024/07/15 07:32:09 INFO: dataverse.SyncReplication: false
+immudb2024/07/15 07:32:09 INFO: dataverse.SyncAcks: 0
+immudb2024/07/15 07:32:09 INFO: dataverse.PrefetchTxBufferSize: 0
+immudb2024/07/15 07:32:09 INFO: dataverse.ReplicationCommitConcurrency: 0
+immudb2024/07/15 07:32:09 INFO: dataverse.AllowTxDiscarding: false
+immudb2024/07/15 07:32:09 INFO: dataverse.SkipIntegrityCheck: false
+immudb2024/07/15 07:32:09 INFO: dataverse.WaitForIndexing: false
+immudb2024/07/15 07:32:09 INFO: dataverse.FileSize: 536870912
+immudb2024/07/15 07:32:09 INFO: dataverse.MaxKeyLen: 1024
+immudb2024/07/15 07:32:09 INFO: dataverse.MaxValueLen: 33554432
+immudb2024/07/15 07:32:09 INFO: dataverse.MaxTxEntries: 1024
+immudb2024/07/15 07:32:09 INFO: dataverse.EmbeddedValues: false
+immudb2024/07/15 07:32:09 INFO: dataverse.PreallocFiles: false
+immudb2024/07/15 07:32:09 INFO: dataverse.ExcludeCommitTime: false
+immudb2024/07/15 07:32:09 INFO: dataverse.MaxActiveTransactions: 1000
+immudb2024/07/15 07:32:09 INFO: dataverse.MVCCReadSetLimit: 100000
+immudb2024/07/15 07:32:09 INFO: dataverse.MaxConcurrency: 30
+immudb2024/07/15 07:32:09 INFO: dataverse.MaxIOConcurrency: 1
+immudb2024/07/15 07:32:09 INFO: dataverse.WriteBufferSize: 4194304
+immudb2024/07/15 07:32:09 INFO: dataverse.TxLogCacheSize: 1000
+immudb2024/07/15 07:32:09 INFO: dataverse.VLogCacheSize: 0
+immudb2024/07/15 07:32:09 INFO: dataverse.VLogMaxOpenedFiles: 10
+immudb2024/07/15 07:32:09 INFO: dataverse.TxLogMaxOpenedFiles: 10
+immudb2024/07/15 07:32:09 INFO: dataverse.CommitLogMaxOpenedFiles: 10
+immudb2024/07/15 07:32:09 INFO: dataverse.WriteTxHeaderVersion: 1
+immudb2024/07/15 07:32:09 INFO: dataverse.ReadTxPoolSize: 128
+immudb2024/07/15 07:32:09 INFO: dataverse.TruncationFrequency: 86400000
+immudb2024/07/15 07:32:09 INFO: dataverse.RetentionPeriod: 0
+immudb2024/07/15 07:32:09 INFO: dataverse.IndexOptions.FlushThreshold: 100000
+immudb2024/07/15 07:32:09 INFO: dataverse.IndexOptions.SyncThreshold: 1000000
+immudb2024/07/15 07:32:09 INFO: dataverse.IndexOptions.FlushBufferSize: 4096
+immudb2024/07/15 07:32:09 INFO: dataverse.IndexOptions.CleanupPercentage: 0
+immudb2024/07/15 07:32:09 INFO: dataverse.IndexOptions.CacheSize: 134217728
+immudb2024/07/15 07:32:09 INFO: dataverse.IndexOptions.MaxNodeSize: 4096
+immudb2024/07/15 07:32:09 INFO: dataverse.IndexOptions.MaxActiveSnapshots: 100
+immudb2024/07/15 07:32:09 INFO: dataverse.IndexOptions.RenewSnapRootAfter: 1000
+immudb2024/07/15 07:32:09 INFO: dataverse.IndexOptions.CompactionThld: 2
+immudb2024/07/15 07:32:09 INFO: dataverse.IndexOptions.DelayDuringCompaction: 10
+immudb2024/07/15 07:32:09 INFO: dataverse.IndexOptions.NodesLogMaxOpenedFiles: 10
+immudb2024/07/15 07:32:09 INFO: dataverse.IndexOptions.HistoryLogMaxOpenedFiles: 1
+immudb2024/07/15 07:32:09 INFO: dataverse.IndexOptions.CommitLogMaxOpenedFiles: 1
+immudb2024/07/15 07:32:09 INFO: dataverse.IndexOptions.MaxBulkSize: 1
+immudb2024/07/15 07:32:09 INFO: dataverse.IndexOptions.BulkPreparationTimeout: 20
+immudb2024/07/15 07:32:09 INFO: dataverse.AHTOptions.SyncThreshold: 100000
+immudb2024/07/15 07:32:09 INFO: dataverse.AHTOptions.WriteBufferSize: 16777216
+immudb2024/07/15 07:32:09 INFO: replication for database 'dataverse' is not required.
+immudb2024/07/15 07:32:09 INFO: Truncation for database 'dataverse' is not required.
+immudb2024/07/15 07:32:09 INFO: database 'dataverse' successfully created
+immudb2024/07/15 07:32:09 INFO: user dataverse was created by user immudb
+immudb2024/07/15 07:32:09 INFO: permissions of user dataverse for database defaultdb was changed by user immudb
+immudb2024/07/15 07:32:35 INFO: flushing index '/var/lib/immudb/systemdb/index_00' {ts=4, cleanup_percentage=0.00/0.00, since_cleanup=4} requested via snapshotSince...
+immudb2024/07/15 07:32:35 INFO: index '/var/lib/immudb/systemdb/index_00' {ts=4, cleanup_percentage=0.00/0.00} successfully flushed
+immudb2024/07/15 07:32:35 INFO: flushing index '/var/lib/immudb/systemdb/index_00' {ts=4} finished with: 1 inner nodes, 0 leaf nodes, 3 entries
+immudb2024/07/15 07:32:35 INFO: flushing index '/var/lib/immudb/defaultdb/index_0243544c2e' {ts=0, cleanup_percentage=0.00/0.00, since_cleanup=0} requested via snapshotSince...
+immudb2024/07/15 07:32:35 INFO: index '/var/lib/immudb/defaultdb/index_0243544c2e' {ts=0, cleanup_percentage=0.00/0.00} successfully flushed
+immudb2024/07/15 07:32:35 INFO: flushing index '/var/lib/immudb/defaultdb/index_0243544c2e' {ts=0} finished with: 1 inner nodes, 0 leaf nodes, 0 entries
+immudb2024/07/15 07:35:52 INFO: caught SIGTERM
+immudb2024/07/15 07:35:52 INFO: stopping immudb:
+================ Config ================
+Data dir         : /var/lib/immudb
+Address          : 0.0.0.0:3322
+Metrics address  : 0.0.0.0:9497/metrics
+Sync replication : false
+Config file      : configs/immudb.toml
+Log file         : /data/immudb.log
+Log format       : text
+Max recv msg size: 33554432
+Auth enabled     : true
+Dev mode         : true
+Default database : defaultdb
+Maintenance mode : false
+Synced mode      : true
+----------------------------------------
+Superadmin default credentials
+   Username      : immudb
+   Password      : immudb
+========================================
+immudb2024/07/15 07:35:52 INFO: closing database 'defaultdb'...
+immudb2024/07/15 07:35:52 INFO: indexing gracefully stopped at '/var/lib/immudb/defaultdb'
+immudb2024/07/15 07:35:52 INFO: closing index '/var/lib/immudb/defaultdb/index_00' {ts=0}...
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/defaultdb/index_00' {ts=0, cleanup_percentage=0.00/0.00, since_cleanup=0} requested via close...
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/defaultdb/index_00' {ts=0, cleanup_percentage=0.00/0.00} successfully flushed
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/defaultdb/index_00' {ts=0, cleanup_percentage=0.00/0.00} successfully synced
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/defaultdb/index_00' {ts=0} finished with: 1 inner nodes, 0 leaf nodes, 0 entries
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/defaultdb/index_00' {ts=0} successfully closed
+immudb2024/07/15 07:35:52 INFO: indexing gracefully stopped at '/var/lib/immudb/defaultdb'
+immudb2024/07/15 07:35:52 INFO: closing index '/var/lib/immudb/defaultdb/index_01' {ts=0}...
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/defaultdb/index_01' {ts=0, cleanup_percentage=0.00/0.00, since_cleanup=0} requested via close...
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/defaultdb/index_01' {ts=0, cleanup_percentage=0.00/0.00} successfully flushed
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/defaultdb/index_01' {ts=0, cleanup_percentage=0.00/0.00} successfully synced
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/defaultdb/index_01' {ts=0} finished with: 1 inner nodes, 0 leaf nodes, 0 entries
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/defaultdb/index_01' {ts=0} successfully closed
+immudb2024/07/15 07:35:52 INFO: indexing gracefully stopped at '/var/lib/immudb/defaultdb'
+immudb2024/07/15 07:35:52 INFO: closing index '/var/lib/immudb/defaultdb/index_0243544c2e' {ts=0}...
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/defaultdb/index_0243544c2e' {ts=0, cleanup_percentage=0.00/0.00, since_cleanup=0} requested via close...
+immudb2024/07/15 07:35:52 INFO: flushing not needed at '/var/lib/immudb/defaultdb/index_0243544c2e' {ts=0, cleanup_percentage=0.00}
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/defaultdb/index_0243544c2e' {ts=0} successfully closed
+immudb2024/07/15 07:35:52 INFO: indexing gracefully stopped at '/var/lib/immudb/defaultdb'
+immudb2024/07/15 07:35:52 INFO: closing index '/var/lib/immudb/defaultdb/index_0343544c2e' {ts=0}...
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/defaultdb/index_0343544c2e' {ts=0, cleanup_percentage=0.00/0.00, since_cleanup=0} requested via close...
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/defaultdb/index_0343544c2e' {ts=0, cleanup_percentage=0.00/0.00} successfully flushed
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/defaultdb/index_0343544c2e' {ts=0, cleanup_percentage=0.00/0.00} successfully synced
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/defaultdb/index_0343544c2e' {ts=0} finished with: 1 inner nodes, 0 leaf nodes, 0 entries
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/defaultdb/index_0343544c2e' {ts=0} successfully closed
+immudb2024/07/15 07:35:52 INFO: database 'defaultdb' successfully closed
+immudb2024/07/15 07:35:52 INFO: closing database 'dataverse'...
+immudb2024/07/15 07:35:52 INFO: indexing gracefully stopped at '/var/lib/immudb/dataverse'
+immudb2024/07/15 07:35:52 INFO: closing index '/var/lib/immudb/dataverse/index_00' {ts=0}...
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/dataverse/index_00' {ts=0, cleanup_percentage=0.00/0.00, since_cleanup=0} requested via close...
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/dataverse/index_00' {ts=0, cleanup_percentage=0.00/0.00} successfully flushed
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/dataverse/index_00' {ts=0, cleanup_percentage=0.00/0.00} successfully synced
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/dataverse/index_00' {ts=0} finished with: 1 inner nodes, 0 leaf nodes, 0 entries
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/dataverse/index_00' {ts=0} successfully closed
+immudb2024/07/15 07:35:52 INFO: indexing gracefully stopped at '/var/lib/immudb/dataverse'
+immudb2024/07/15 07:35:52 INFO: closing index '/var/lib/immudb/dataverse/index_01' {ts=0}...
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/dataverse/index_01' {ts=0, cleanup_percentage=0.00/0.00, since_cleanup=0} requested via close...
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/dataverse/index_01' {ts=0, cleanup_percentage=0.00/0.00} successfully flushed
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/dataverse/index_01' {ts=0, cleanup_percentage=0.00/0.00} successfully synced
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/dataverse/index_01' {ts=0} finished with: 1 inner nodes, 0 leaf nodes, 0 entries
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/dataverse/index_01' {ts=0} successfully closed
+immudb2024/07/15 07:35:52 INFO: indexing gracefully stopped at '/var/lib/immudb/dataverse'
+immudb2024/07/15 07:35:52 INFO: closing index '/var/lib/immudb/dataverse/index_0243544c2e' {ts=0}...
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/dataverse/index_0243544c2e' {ts=0, cleanup_percentage=0.00/0.00, since_cleanup=0} requested via close...
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/dataverse/index_0243544c2e' {ts=0, cleanup_percentage=0.00/0.00} successfully flushed
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/dataverse/index_0243544c2e' {ts=0, cleanup_percentage=0.00/0.00} successfully synced
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/dataverse/index_0243544c2e' {ts=0} finished with: 1 inner nodes, 0 leaf nodes, 0 entries
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/dataverse/index_0243544c2e' {ts=0} successfully closed
+immudb2024/07/15 07:35:52 INFO: indexing gracefully stopped at '/var/lib/immudb/dataverse'
+immudb2024/07/15 07:35:52 INFO: closing index '/var/lib/immudb/dataverse/index_0343544c2e' {ts=0}...
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/dataverse/index_0343544c2e' {ts=0, cleanup_percentage=0.00/0.00, since_cleanup=0} requested via close...
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/dataverse/index_0343544c2e' {ts=0, cleanup_percentage=0.00/0.00} successfully flushed
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/dataverse/index_0343544c2e' {ts=0, cleanup_percentage=0.00/0.00} successfully synced
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/dataverse/index_0343544c2e' {ts=0} finished with: 1 inner nodes, 0 leaf nodes, 0 entries
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/dataverse/index_0343544c2e' {ts=0} successfully closed
+immudb2024/07/15 07:35:52 INFO: database 'dataverse' successfully closed
+immudb2024/07/15 07:35:52 INFO: closing database 'systemdb'...
+immudb2024/07/15 07:35:52 INFO: indexing gracefully stopped at '/var/lib/immudb/systemdb'
+immudb2024/07/15 07:35:52 INFO: closing index '/var/lib/immudb/systemdb/index_00' {ts=4}...
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/systemdb/index_00' {ts=4, cleanup_percentage=0.00/0.00, since_cleanup=4} requested via close...
+immudb2024/07/15 07:35:52 INFO: flushing not needed at '/var/lib/immudb/systemdb/index_00' {ts=4, cleanup_percentage=0.00}
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/systemdb/index_00' {ts=4} successfully closed
+immudb2024/07/15 07:35:52 INFO: indexing gracefully stopped at '/var/lib/immudb/systemdb'
+immudb2024/07/15 07:35:52 INFO: closing index '/var/lib/immudb/systemdb/index_01' {ts=4}...
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/systemdb/index_01' {ts=4, cleanup_percentage=0.00/0.00, since_cleanup=4} requested via close...
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/systemdb/index_01' {ts=4, cleanup_percentage=0.00/0.00} successfully flushed
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/systemdb/index_01' {ts=4, cleanup_percentage=0.00/0.00} successfully synced
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/systemdb/index_01' {ts=4} finished with: 1 inner nodes, 0 leaf nodes, 0 entries
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/systemdb/index_01' {ts=4} successfully closed
+immudb2024/07/15 07:35:52 INFO: indexing gracefully stopped at '/var/lib/immudb/systemdb'
+immudb2024/07/15 07:35:52 INFO: closing index '/var/lib/immudb/systemdb/index_0243544c2e' {ts=4}...
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/systemdb/index_0243544c2e' {ts=4, cleanup_percentage=0.00/0.00, since_cleanup=4} requested via close...
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/systemdb/index_0243544c2e' {ts=4, cleanup_percentage=0.00/0.00} successfully flushed
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/systemdb/index_0243544c2e' {ts=4, cleanup_percentage=0.00/0.00} successfully synced
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/systemdb/index_0243544c2e' {ts=4} finished with: 1 inner nodes, 0 leaf nodes, 0 entries
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/systemdb/index_0243544c2e' {ts=4} successfully closed
+immudb2024/07/15 07:35:52 INFO: indexing gracefully stopped at '/var/lib/immudb/systemdb'
+immudb2024/07/15 07:35:52 INFO: closing index '/var/lib/immudb/systemdb/index_0343544c2e' {ts=4}...
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/systemdb/index_0343544c2e' {ts=4, cleanup_percentage=0.00/0.00, since_cleanup=4} requested via close...
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/systemdb/index_0343544c2e' {ts=4, cleanup_percentage=0.00/0.00} successfully flushed
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/systemdb/index_0343544c2e' {ts=4, cleanup_percentage=0.00/0.00} successfully synced
+immudb2024/07/15 07:35:52 INFO: flushing index '/var/lib/immudb/systemdb/index_0343544c2e' {ts=4} finished with: 1 inner nodes, 0 leaf nodes, 0 entries
+immudb2024/07/15 07:35:52 INFO: index '/var/lib/immudb/systemdb/index_0343544c2e' {ts=4} successfully closed
+immudb2024/07/15 07:35:52 INFO: database 'systemdb' successfully closed
+immudb2024/07/15 07:35:52 INFO: shutdown completed
