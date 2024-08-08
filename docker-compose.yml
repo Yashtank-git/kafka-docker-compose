@@ -178,9 +178,6 @@ services:
     image: provectuslabs/kafka-ui:latest
     ports:
       - 8080:8080
-    volumes:
-      - ./secrets/kafka.truststore.jks:/kafka.truststore.jks
-      - ./secrets/client.keystore.jks:/client.keystore.jks
     depends_on:
       - kafka-1
       - kafka-2
