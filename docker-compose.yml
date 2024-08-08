@@ -18,6 +18,7 @@ version: '2'
 services:
   controller-1:
     image: apache/kafka:latest
+    hostname: controller-1
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: 'controller'
@@ -27,7 +28,7 @@ services:
       KAFKA_LISTENERS: 'CONTROLLER://:29092'
       CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 10
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
@@ -36,6 +37,7 @@ services:
   
   controller-2:
     image: apache/kafka:latest
+    hostname: controller-2
     environment:
       KAFKA_NODE_ID: 2
       KAFKA_PROCESS_ROLES: 'controller'
@@ -45,7 +47,7 @@ services:
       KAFKA_LISTENERS: 'CONTROLLER://:29092'
       CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 10
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
@@ -54,6 +56,7 @@ services:
 
   controller-3:
     image: apache/kafka:latest
+    hostname: controller-3
     environment:
       KAFKA_NODE_ID: 3
       KAFKA_PROCESS_ROLES: 'controller'
@@ -63,10 +66,11 @@ services:
       KAFKA_LISTENERS: 'CONTROLLER://:29092'
       CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 10
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+
     networks:
       - byte-pe-network
 
@@ -75,32 +79,23 @@ services:
     hostname: kafka-1
     container_name: kafka-1
     ports:
-      - 29093:9093
+      - 29094:19094
+
     volumes:
-      - ./secrets:/etc/kafka/secrets
+      - ./server-1.properties:/mnt/shared/config/server.properties
     environment:
       KAFKA_NODE_ID: 4
       KAFKA_PROCESS_ROLES: 'broker'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'SSL:SSL,CONTROLLER:PLAINTEXT,SSL-INTERNAL:SSL'
-      KAFKA_LISTENERS: 'SSL-INTERNAL://:19093,SSL://:9093'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,SASL_PLAINTEXT:SASL_PLAINTEXT,EXTERNAL:SASL_PLAINTEXT'
+      KAFKA_LISTENERS: 'SASL_PLAINTEXT://:19093,EXTERNAL://:19094'
       KAFKA_CONTROLLER_QUORUM_VOTERS: '1@controller-1:29092,2@controller-2:29092,3@controller-3:29092'
-      KAFKA_INTER_BROKER_LISTENER_NAME: 'SSL-INTERNAL'
-      KAFKA_SECURITY_PROTOCOL: SSL
-      KAFKA_ADVERTISED_LISTENERS: SSL-INTERNAL://kafka-1:19093,SSL://localhost:29093
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
       CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 10
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-      KAFKA_SSL_KEYSTORE_FILENAME: 'kafka-1.keystore.jks'
-      KAFKA_SSL_KEYSTORE_CREDENTIALS: 'kafka_keystore_creds'
-      KAFKA_SSL_KEY_CREDENTIALS: 'kafka_ssl_key_creds'
-      KAFKA_SSL_TRUSTSTORE_FILENAME: 'kafka.truststore.jks'
-      KAFKA_SSL_TRUSTSTORE_CREDENTIALS: 'kafka_truststore_creds'
-      KAFKA_SSL_CLIENT_AUTH: 'required'
-      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: 'https'
     depends_on:
       - controller-1
       - controller-2
@@ -113,32 +108,22 @@ services:
     hostname: kafka-2
     container_name: kafka-2
     ports:
-      - 39093:9093
+      - 39094:19094
     volumes:
-      - ./secrets:/etc/kafka/secrets
+      - ./server-2.properties:/mnt/shared/config/server.properties
     environment:
       KAFKA_NODE_ID: 5
       KAFKA_PROCESS_ROLES: 'broker'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'SSL:SSL,CONTROLLER:PLAINTEXT,SSL-INTERNAL:SSL'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'SASL_PLAINTEXT:SASL_PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:SASL_PLAINTEXT'
       KAFKA_CONTROLLER_QUORUM_VOTERS: '1@controller-1:29092,2@controller-2:29092,3@controller-3:29092'
-      KAFKA_LISTENERS: 'SSL-INTERNAL://:19093,SSL://:9093'
-      KAFKA_INTER_BROKER_LISTENER_NAME: 'SSL-INTERNAL'
-      KAFKA_SECURITY_PROTOCOL: SSL
-      KAFKA_ADVERTISED_LISTENERS: SSL-INTERNAL://kafka-2:19093,SSL://localhost:39093
+      KAFKA_LISTENERS: 'SASL_PLAINTEXT://:19093,EXTERNAL://:19094'
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
       CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 10
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-      KAFKA_SSL_KEYSTORE_FILENAME: 'kafka-2.keystore.jks'
-      KAFKA_SSL_KEYSTORE_CREDENTIALS: 'kafka_keystore_creds'
-      KAFKA_SSL_KEY_CREDENTIALS: 'kafka_ssl_key_creds'
-      KAFKA_SSL_TRUSTSTORE_FILENAME: 'kafka.truststore.jks'
-      KAFKA_SSL_TRUSTSTORE_CREDENTIALS: 'kafka_truststore_creds'
-      KAFKA_SSL_CLIENT_AUTH: 'required'
-      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: 'https'
     depends_on:
       - controller-1
       - controller-2
@@ -152,40 +137,29 @@ services:
     hostname: kafka-3
     container_name: kafka-3
     ports:
-      - 49093:9093
+      - 49094:19094
     volumes:
-      - ./secrets:/etc/kafka/secrets
+      - ./server-3.properties:/mnt/shared/config/server.properties
     environment:
       KAFKA_NODE_ID: 6
       KAFKA_PROCESS_ROLES: 'broker'
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'SSL:SSL,CONTROLLER:PLAINTEXT,SSL-INTERNAL:SSL'
-      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@controller-1:29092,2@controller-2:29092,3@controller-3:29092'
-      KAFKA_LISTENERS: 'SSL-INTERNAL://:19093,SSL://:9093'
-      KAFKA_INTER_BROKER_LISTENER_NAME: 'SSL-INTERNAL'
-      KAFKA_SECURITY_PROTOCOL: SSL
-      KAFKA_ADVERTISED_LISTENERS: SSL-INTERNAL://kafka-3:19093,SSL://localhost:49093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'SASL_PLAINTEXT:SASL_PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:SASL_PLAINTEXT'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '3@controller-3:29092,1@controller-1:29092,2@controller-2:29092'
+      KAFKA_LISTENERS: 'SASL_PLAINTEXT://:19093,EXTERNAL://:19094'
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
       CLUSTER_ID: '4L6g3nShT-eMCtK--X86sw'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 10
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-      KAFKA_SSL_KEYSTORE_FILENAME: 'kafka-3.keystore.jks'
-      KAFKA_SSL_KEYSTORE_CREDENTIALS: 'kafka_keystore_creds'
-      KAFKA_SSL_KEY_CREDENTIALS: 'kafka_ssl_key_creds'
-      KAFKA_SSL_TRUSTSTORE_FILENAME: 'kafka.truststore.jks'
-      KAFKA_SSL_TRUSTSTORE_CREDENTIALS: 'kafka_truststore_creds'
-      KAFKA_SSL_CLIENT_AUTH: 'required'
-      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: 'https'
     depends_on:
       - controller-1
       - controller-2
       - controller-3
-
     networks:
       - byte-pe-network
-
+    
   kafka-init:
     image: apache/kafka:latest
     depends_on:
@@ -193,10 +167,9 @@ services:
       - kafka-2
       - kafka-3
     volumes:
-      - ./secrets:/etc/kafka/secrets
       - ./create-topics.sh:/create-topics.sh
       - ./client.properties:/client.properties
-    command: "bash -c './create-topics.sh'"
+    entrypoint: ["bash", "/create-topics.sh"]
     networks:
       - byte-pe-network
 
@@ -205,26 +178,23 @@ services:
     image: provectuslabs/kafka-ui:latest
     ports:
       - 8080:8080
+    volumes:
+      - ./secrets/kafka.truststore.jks:/kafka.truststore.jks
+      - ./secrets/client.keystore.jks:/client.keystore.jks
     depends_on:
       - kafka-1
       - kafka-2
       - kafka-3
     environment:
-      KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: SSL
-      KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_LOCATION: /kafka.keystore.jks
-      KAFKA_CLUSTERS_0_PROPERTIES_SSL_KEYSTORE_PASSWORD: "password"
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-1:19093,kafka-2:19093,kafka-3:19093 # SSL LISTENER!
-      KAFKA_CLUSTERS_0_SSL_TRUSTSTORELOCATION: /kafka.truststore.jks
-      KAFKA_CLUSTERS_0_SSL_TRUSTSTOREPASSWORD: "password"
-      KAFKA_CLUSTERS_0_PROPERTIES_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: 'https' 
-      DYNAMIC_CONFIG_ENABLED: 'true'
-    volumes:
-      - ./secrets/kafka.truststore.jks:/kafka.truststore.jks
-      - ./secrets/client.keystore.jks:/kafka.keystore.jks
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_PROPERTIES_SECURITY_PROTOCOL: SASL_PLAINTEXT
+      KAFKA_CLUSTERS_0_PROPERTIES_SASL_MECHANISM: PLAIN
+      KAFKA_CLUSTERS_0_PROPERTIES_SASL_JAAS_CONFIG: 'org.apache.kafka.common.security.plain.PlainLoginModule required username="alice" password="alice-secret";'
+      DYNAMIC_CONFIG_ENABLED: true # not necessary for sasl auth, added for tests
     networks:
       - byte-pe-network
 
 networks:
   byte-pe-network:
-
+  
